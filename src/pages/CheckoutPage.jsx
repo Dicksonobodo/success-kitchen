@@ -15,7 +15,6 @@ const CheckoutPage = () => {
 
   const total = getCartTotal();
 
-  // If cart is empty, redirect to menu
   if (cartItems.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
@@ -39,29 +38,28 @@ const CheckoutPage = () => {
     setError('');
 
     try {
-      // Prepare order data
       const orderData = {
         customerName: formData.customerName,
         phone: formData.phone,
         address: formData.address,
         specialInstructions: formData.specialInstructions,
         items: cartItems,
-        total: total
+        total
       };
 
-      // Save order to Firebase first
       const createdOrder = await createOrder(orderData);
 
-      // Send order to WhatsApp - this will open WhatsApp
-      sendOrderToWhatsApp(createdOrder);
+      // ✅ Build WhatsApp URL (no popup)
+      const whatsappUrl = sendOrderToWhatsApp(createdOrder);
 
-      // Clear cart
+      // Clear cart before redirect
       clearCart();
 
-      // Small delay to ensure WhatsApp opens, then navigate
-      setTimeout(() => {
-        navigate('/order-success', { state: { order: createdOrder } });
-      }, 1000);
+      // ✅ Redirect (cannot be blocked)
+      window.location.href = whatsappUrl;
+
+      // Optional navigation fallback
+      navigate('/order-success', { state: { order: createdOrder } });
 
     } catch (err) {
       console.error('Error submitting order:', err);
@@ -73,7 +71,6 @@ const CheckoutPage = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-6xl mx-auto">
-        {/* Back Button */}
         <button
           onClick={() => navigate('/menu')}
           className="flex items-center space-x-2 text-blue-900 hover:text-blue-700 mb-6 font-semibold transition-colors"
@@ -82,19 +79,17 @@ const CheckoutPage = () => {
           <span>Back to Menu</span>
         </button>
 
-        {/* Page Title */}
         <h1 className="text-3xl md:text-4xl font-bold text-blue-900 mb-8">
           Checkout
         </h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left Column - Checkout Form */}
           <div>
             <div className="bg-white rounded-lg shadow-md p-6">
               <h2 className="text-2xl font-bold text-gray-800 mb-6">
                 Delivery Information
               </h2>
-              
+
               {error && (
                 <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-start space-x-3">
                   <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
@@ -102,21 +97,19 @@ const CheckoutPage = () => {
                 </div>
               )}
 
-              <CheckoutForm 
-                onSubmit={handleSubmitOrder} 
+              <CheckoutForm
+                onSubmit={handleSubmitOrder}
                 isSubmitting={isSubmitting}
               />
             </div>
           </div>
 
-          {/* Right Column - Order Summary */}
           <div>
             <div className="bg-white rounded-lg shadow-md p-6 sticky top-24">
               <h2 className="text-2xl font-bold text-gray-800 mb-6">
                 Order Summary
               </h2>
 
-              {/* Cart Items */}
               <div className="space-y-4 mb-6 max-h-96 overflow-y-auto">
                 {cartItems.map((item) => (
                   <div key={item.id} className="flex justify-between items-start pb-4 border-b border-gray-200">
@@ -133,18 +126,11 @@ const CheckoutPage = () => {
                 ))}
               </div>
 
-              {/* Total */}
               <div className="border-t-2 border-gray-300 pt-4 mb-6">
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-semibold text-gray-700">Subtotal</span>
                   <span className="text-lg font-semibold text-gray-800">
                     {formatPrice(total)}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center mt-2">
-                  <span className="text-lg font-semibold text-gray-700">Delivery Fee</span>
-                  <span className="text-lg font-semibold text-gray-800">
-                    To be confirmed
                   </span>
                 </div>
                 <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-200">
@@ -155,10 +141,9 @@ const CheckoutPage = () => {
                 </div>
               </div>
 
-              {/* Info Box */}
               <div className="bg-blue-50 rounded-lg p-4">
                 <p className="text-sm text-blue-900">
-                  <strong>Note:</strong> After placing your order, WhatsApp will open with your order details. Send the message to complete your order.
+                  <strong>Note:</strong> WhatsApp will open to send your order.
                 </p>
               </div>
             </div>
