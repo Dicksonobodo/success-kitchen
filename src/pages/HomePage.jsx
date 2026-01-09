@@ -97,7 +97,7 @@ const HomePage = () => {
             {/* Small Chops */}
             <div className="bg-linear-to-br from-amber-50 to-orange-50 rounded-lg p-8 border-2 border-amber-200">
               <h3 className="text-2xl font-bold text-blue-900 mb-3">
-                🍢 Small Chops & Snacks
+                 Small Chops & Snacks
               </h3>
               <p className="text-gray-700 mb-4">
                 Perfect for parties, events, or a quick snack. Our small chops platters include samosas, spring rolls, puff puff, and more!
@@ -112,7 +112,7 @@ const HomePage = () => {
             {/* Main Dishes */}
             <div className="bg-linear-to-br from-blue-50 to-indigo-50 rounded-lg p-8 border-2 border-blue-200">
               <h3 className="text-2xl font-bold text-blue-900 mb-3">
-                🍛 Main Dishes
+                 Main Dishes
               </h3>
               <p className="text-gray-700 mb-4">
                 Authentic Nigerian cuisine that brings the taste of home. From jollof rice to rich soups, we've got you covered.

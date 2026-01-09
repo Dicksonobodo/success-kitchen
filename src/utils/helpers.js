@@ -48,7 +48,7 @@ export const formatWhatsAppMessage = (orderData) => {
   
   message += `\n✅ Please confirm this order.`;
   
-  return encodeURIComponent(message);
+  return message;
 };
 
 /**

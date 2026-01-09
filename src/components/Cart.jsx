@@ -3,11 +3,15 @@ import { useCart } from '../hooks/useCart';
 import { formatPrice } from '../utils/helpers';
 import CartItem from './CartItem';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import ConfirmModal from './ConfirmModal';
 
 const Cart = ({ isOpen, onClose }) => {
   const { cartItems, getCartTotal, clearCart } = useCart();
   const navigate = useNavigate();
   const total = getCartTotal();
+  
+  const [showClearCartModal, setShowClearCartModal] = useState(false);
 
   const handleCheckout = () => {
     onClose();
@@ -15,9 +19,8 @@ const Cart = ({ isOpen, onClose }) => {
   };
 
   const handleClearCart = () => {
-    if (window.confirm('Are you sure you want to clear your cart?')) {
-      clearCart();
-    }
+    clearCart();
+    setShowClearCartModal(false);
   };
 
   if (!isOpen) return null;
@@ -89,7 +92,7 @@ const Cart = ({ isOpen, onClose }) => {
                   Proceed to Checkout
                 </button>
                 <button
-                  onClick={handleClearCart}
+                  onClick={() => setShowClearCartModal(true)}
                   className="w-full bg-white hover:bg-gray-100 text-red-600 border border-red-600 py-2 rounded-lg font-semibold transition-colors flex items-center justify-center space-x-2"
                 >
                   <Trash2 size={18} />
@@ -100,6 +103,18 @@ const Cart = ({ isOpen, onClose }) => {
           )}
         </div>
       </div>
+
+      {/* Clear Cart Confirmation Modal */}
+      <ConfirmModal
+        isOpen={showClearCartModal}
+        onClose={() => setShowClearCartModal(false)}
+        onConfirm={handleClearCart}
+        title="Clear Cart?"
+        message={`Are you sure you want to remove all ${cartItems.length} items from your cart?`}
+        confirmText="Yes, Clear Cart"
+        cancelText="Cancel"
+        isDangerous={true}
+      />
     </>
   );
 };

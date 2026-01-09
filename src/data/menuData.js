@@ -17,7 +17,7 @@ export const menuData = {
         price: 3000,
         description: "2 Samosa • 2 Spring Roll • 6 Puff Puff • 1 Beef",
         type: "pack",
-        image: "/images/small-chops.jpg"
+        image: "/images/small-chops2.jpeg"
       },
       {
         id: "pack-4500",
@@ -25,7 +25,7 @@ export const menuData = {
         price: 4500,
         description: "3 Samosa • 3 Spring Roll • 8 Puff Puff • 3 Beef",
         type: "pack",
-        image: "/images/small-chops.jpg"
+        image: "/images/small-chops3.jpeg"
       },
       // Small Chops Platters
       {
@@ -33,8 +33,8 @@ export const menuData = {
         name: "Small Chops Platter - ₦9,000",
         price: 9000,
         description: "6 Samosa • 6 Spring Roll • 15 Puff Puff • 1 Chicken",
-        type: "platter",
-        image: "/images/platter.jpg"
+        type: "platter-small",
+        image: "/images/platter-small.jpg"
       },
       {
         id: "platter-12000",
@@ -42,7 +42,7 @@ export const menuData = {
         price: 12000,
         description: "8 Samosa • 8 Spring Roll • 20 Puff Puff • 2 Chicken",
         type: "platter",
-        image: "/images/platter.jpg"
+        image: "/images/platter2.jpg"
       },
       {
         id: "platter-20000",
