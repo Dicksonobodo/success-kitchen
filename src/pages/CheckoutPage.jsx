@@ -38,14 +38,20 @@ const CheckoutPage = () => {
     setError('');
 
     try {
-      const orderData = {
-        customerName: formData.customerName,
-        phone: formData.phone,
-        address: formData.address,
-        specialInstructions: formData.specialInstructions,
-        items: cartItems,
-        total
-      };
+     const orderData = {
+  customerName: formData.customerName,
+  phone: formData.phone,
+  address: formData.address,
+  specialInstructions: formData.specialInstructions || '',
+  items: cartItems.map(item => ({
+    id: item.id,
+    name: item.name,
+    price: item.price,
+    quantity: item.quantity
+  })),
+  total
+};
+
 
       const createdOrder = await createOrder(orderData);
 
