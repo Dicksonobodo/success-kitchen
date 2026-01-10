@@ -55,7 +55,7 @@ const Footer = () => {
             to="/admin" 
             className="text-gray-500 hover:text-gray-400 transition-colors text-xs mt-2 inline-block"
           >
-            Admin
+            0
           </Link>
         </div>
       </div>
