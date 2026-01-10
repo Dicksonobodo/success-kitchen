@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ShoppingBag, AlertCircle } from 'lucide-react';
 import { useCart } from '../hooks/useCart';
 import CheckoutForm from '../components/CheckoutForm';
-import { formatPrice } from '../utils/helpers';
+import { formatPrice, formatPhoneNumber } from '../utils/helpers';
 import { createOrder } from '../services/orderService';
 import { sendOrderToWhatsApp } from '../services/whatsappService';
 
@@ -40,7 +40,7 @@ const CheckoutPage = () => {
     try {
      const orderData = {
   customerName: formData.customerName,
-  phone: formData.phone,
+  phone: formatPhoneNumber(formData.phone),
   address: formData.address,
   specialInstructions: formData.specialInstructions || '',
   items: cartItems.map(item => ({

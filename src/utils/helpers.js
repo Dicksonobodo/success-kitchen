@@ -67,23 +67,29 @@ export const validatePhone = (phone) => {
 };
 
 /**
- * Format phone number to international format
+ * Format phone number to international format (234XXXXXXXXXX)
  * @param {string} phone - Phone number to format
  * @returns {string} Formatted phone number
  */
 export const formatPhoneNumber = (phone) => {
+  // Remove all spaces, dashes, and parentheses
   const cleaned = phone.replace(/[\s\-()]/g, '');
   
-  // Convert to international format
+  // Convert to international format (234XXXXXXXXXX)
   if (cleaned.startsWith('0')) {
+    // 09011950323 -> 2349011950323
     return `234${cleaned.slice(1)}`;
   } else if (cleaned.startsWith('+234')) {
+    // +2349011950323 -> 2349011950323
     return cleaned.slice(1);
   } else if (cleaned.startsWith('234')) {
+    // 2349011950323 -> 2349011950323 (already correct)
     return cleaned;
+  } else {
+    // Assume it needs 234 prefix
+    // 9011950323 -> 2349011950323
+    return `234${cleaned}`;
   }
-  
-  return cleaned;
 };
 
 /**

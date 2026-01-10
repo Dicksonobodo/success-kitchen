@@ -48,6 +48,16 @@ export const sendCustomerConfirmation = (customerPhone, orderData) => {
  * @returns {string}
  */
 export const sendStatusUpdate = (customerPhone, orderId, status) => {
+  // Format phone number if it starts with 0
+  let formattedPhone = customerPhone;
+  if (customerPhone.startsWith('0')) {
+    formattedPhone = '234' + customerPhone.slice(1);
+  } else if (customerPhone.startsWith('+234')) {
+    formattedPhone = customerPhone.slice(1);
+  } else if (!customerPhone.startsWith('234')) {
+    formattedPhone = '234' + customerPhone;
+  }
+
   let statusMessage = '';
 
   switch (status) {
@@ -71,7 +81,7 @@ export const sendStatusUpdate = (customerPhone, orderId, status) => {
   message += `📞 0816 086 0973`;
 
   const encodedMessage = encodeURIComponent(message);
-  return `https://wa.me/${customerPhone}?text=${encodedMessage}`;
+  return `https://wa.me/${formattedPhone}?text=${encodedMessage}`;
 };
 
 /**
